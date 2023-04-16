@@ -153,6 +153,9 @@ class MapLocationPicker extends StatefulWidget {
   /// Map type (default: MapType.normal)
   final MapType mapType;
 
+  /// Show Map tile (default: true)
+  final bool showMapTile;
+
   /// Search text field controller
   final TextEditingController? searchController;
 
@@ -210,6 +213,7 @@ class MapLocationPicker extends StatefulWidget {
     this.strictbounds = false,
     this.hideSuggestionsOnKeyboardHide = false,
     this.mapType = MapType.normal,
+    this.showMapTile = true,
     this.searchController,
     this.additionalMarkers,
   }) : super(key: key);
@@ -230,6 +234,9 @@ class _MapLocationPickerState extends State<MapLocationPicker> {
 
   /// Map type (default: MapType.normal)
   late MapType _mapType = MapType.normal;
+
+  /// Show Map tile (default: true)
+  late bool _showMapTile = true;
 
   /// initial zoom level
   late double _zoom = 18.0;
@@ -301,6 +308,7 @@ class _MapLocationPickerState extends State<MapLocationPicker> {
   void initState() {
     _initialPosition = widget.currentLatLng ?? _initialPosition;
     _mapType = widget.mapType;
+    _showMapTile = widget.showMapTile;
     _searchController = widget.searchController ?? _searchController;
     super.initState();
   }
@@ -413,7 +421,7 @@ class _MapLocationPickerState extends State<MapLocationPicker> {
                 },
               ),
               const Spacer(),
-              if (_mapType != MapType.none)
+              if (_showMapTile)
                 Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Card(
